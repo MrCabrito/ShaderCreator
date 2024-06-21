@@ -162,7 +162,7 @@
           <number>0</number>
          </property>
          <item>
-          <widget class="QCheckBox" name="checkBox">
+          <widget class="QCheckBox" name="chbox_diffuse">
            <property name="minimumSize">
             <size>
              <width>90</width>
@@ -175,14 +175,17 @@
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="lineEdit">
+          <widget class="QLineEdit" name="lEdit_diffuse">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
            <property name="placeholderText">
             <string>Texture Path</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton">
+          <widget class="QPushButton" name="btn_diffuse">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -213,7 +216,7 @@
           <number>0</number>
          </property>
          <item>
-          <widget class="QCheckBox" name="checkBox_2">
+          <widget class="QCheckBox" name="chbox_specular">
            <property name="minimumSize">
             <size>
              <width>90</width>
@@ -226,14 +229,17 @@
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="lineEdit_2">
+          <widget class="QLineEdit" name="lEdit_specular">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
            <property name="placeholderText">
             <string>Texture Path</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton_2">
+          <widget class="QPushButton" name="btn_specular">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -264,7 +270,7 @@
           <number>0</number>
          </property>
          <item>
-          <widget class="QCheckBox" name="checkBox_3">
+          <widget class="QCheckBox" name="chbox_roughness">
            <property name="minimumSize">
             <size>
              <width>90</width>
@@ -277,14 +283,17 @@
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="lineEdit_3">
+          <widget class="QLineEdit" name="lEdit_roughness">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
            <property name="placeholderText">
             <string>Texture Path</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton_3">
+          <widget class="QPushButton" name="btn_roughness">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -315,7 +324,7 @@
           <number>0</number>
          </property>
          <item>
-          <widget class="QCheckBox" name="checkBox_4">
+          <widget class="QCheckBox" name="chbox_transmission">
            <property name="minimumSize">
             <size>
              <width>90</width>
@@ -328,14 +337,17 @@
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="lineEdit_4">
+          <widget class="QLineEdit" name="lEdit_transmission">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
            <property name="placeholderText">
             <string>Texture Path</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton_4">
+          <widget class="QPushButton" name="btn_transmission">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -366,7 +378,7 @@
           <number>0</number>
          </property>
          <item>
-          <widget class="QCheckBox" name="checkBox_5">
+          <widget class="QCheckBox" name="chbox_sss">
            <property name="minimumSize">
             <size>
              <width>90</width>
@@ -379,14 +391,17 @@
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="lineEdit_5">
+          <widget class="QLineEdit" name="lEdit_sss">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
            <property name="placeholderText">
             <string>Texture Path</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton_5">
+          <widget class="QPushButton" name="btn_sss">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -417,7 +432,7 @@
           <number>0</number>
          </property>
          <item>
-          <widget class="QCheckBox" name="checkBox_6">
+          <widget class="QCheckBox" name="chbox_sssColor">
            <property name="minimumSize">
             <size>
              <width>90</width>
@@ -430,14 +445,17 @@
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="lineEdit_6">
+          <widget class="QLineEdit" name="lEdit_sssColor">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
            <property name="placeholderText">
             <string>Texture Path</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton_6">
+          <widget class="QPushButton" name="btn_sssColor">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -468,7 +486,7 @@
           <number>0</number>
          </property>
          <item>
-          <widget class="QCheckBox" name="checkBox_7">
+          <widget class="QCheckBox" name="chbox_bump">
            <property name="minimumSize">
             <size>
              <width>90</width>
@@ -481,14 +499,17 @@
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="lineEdit_7">
+          <widget class="QLineEdit" name="lEdit_bump">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
            <property name="placeholderText">
             <string>Texture Path</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton_7">
+          <widget class="QPushButton" name="btn_bump">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -519,7 +540,7 @@
           <number>0</number>
          </property>
          <item>
-          <widget class="QCheckBox" name="checkBox_8">
+          <widget class="QCheckBox" name="chbox_displacement">
            <property name="minimumSize">
             <size>
              <width>90</width>
@@ -532,14 +553,17 @@
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="lineEdit_8">
+          <widget class="QLineEdit" name="lEdit_displacement">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
            <property name="placeholderText">
             <string>Texture Path</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton_8">
+          <widget class="QPushButton" name="btn_displacement">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -559,9 +583,9 @@
  <resources/>
  <connections>
   <connection>
-   <sender>checkBox</sender>
+   <sender>chbox_diffuse</sender>
    <signal>clicked(bool)</signal>
-   <receiver>pushButton</receiver>
+   <receiver>btn_diffuse</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -575,9 +599,9 @@
    </hints>
   </connection>
   <connection>
-   <sender>checkBox_2</sender>
+   <sender>chbox_specular</sender>
    <signal>clicked(bool)</signal>
-   <receiver>pushButton_2</receiver>
+   <receiver>btn_specular</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -591,9 +615,9 @@
    </hints>
   </connection>
   <connection>
-   <sender>checkBox_3</sender>
+   <sender>chbox_roughness</sender>
    <signal>clicked(bool)</signal>
-   <receiver>pushButton_3</receiver>
+   <receiver>btn_roughness</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -607,9 +631,9 @@
    </hints>
   </connection>
   <connection>
-   <sender>checkBox_4</sender>
+   <sender>chbox_transmission</sender>
    <signal>clicked(bool)</signal>
-   <receiver>pushButton_4</receiver>
+   <receiver>btn_transmission</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -623,9 +647,9 @@
    </hints>
   </connection>
   <connection>
-   <sender>checkBox_5</sender>
+   <sender>chbox_sss</sender>
    <signal>clicked(bool)</signal>
-   <receiver>pushButton_5</receiver>
+   <receiver>btn_sss</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -639,9 +663,9 @@
    </hints>
   </connection>
   <connection>
-   <sender>checkBox_6</sender>
+   <sender>chbox_sssColor</sender>
    <signal>clicked(bool)</signal>
-   <receiver>pushButton_6</receiver>
+   <receiver>btn_sssColor</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -655,9 +679,9 @@
    </hints>
   </connection>
   <connection>
-   <sender>checkBox_7</sender>
+   <sender>chbox_bump</sender>
    <signal>clicked(bool)</signal>
-   <receiver>pushButton_7</receiver>
+   <receiver>btn_bump</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -671,9 +695,9 @@
    </hints>
   </connection>
   <connection>
-   <sender>checkBox_8</sender>
+   <sender>chbox_displacement</sender>
    <signal>clicked(bool)</signal>
-   <receiver>pushButton_8</receiver>
+   <receiver>btn_displacement</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -683,6 +707,134 @@
     <hint type="destinationlabel">
      <x>306</x>
      <y>255</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>chbox_diffuse</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>lEdit_diffuse</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>12</x>
+     <y>74</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>115</x>
+     <y>79</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>chbox_specular</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>lEdit_specular</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>22</x>
+     <y>103</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>119</x>
+     <y>101</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>chbox_roughness</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>lEdit_roughness</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>12</x>
+     <y>132</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>137</x>
+     <y>132</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>chbox_transmission</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>lEdit_transmission</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>8</x>
+     <y>156</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>147</x>
+     <y>158</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>chbox_sss</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>lEdit_sss</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>10</x>
+     <y>181</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>125</x>
+     <y>178</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>chbox_sssColor</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>lEdit_sssColor</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>13</x>
+     <y>205</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>126</x>
+     <y>209</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>chbox_bump</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>lEdit_bump</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>9</x>
+     <y>231</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>139</x>
+     <y>231</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>chbox_displacement</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>lEdit_displacement</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>5</x>
+     <y>256</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>119</x>
+     <y>261</y>
     </hint>
    </hints>
   </connection>
