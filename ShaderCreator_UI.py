@@ -18,6 +18,14 @@ class ShaderCreatorUI(QtWidgets.QWidget):
 
         # Signals Actions
         self.widget.btn_create.clicked.connect(self.action_create_shader)
+        self.widget.btn_diffuse.clicked.connect(self.browse_file)
+        self.widget.btn_specular.clicked.connect(self.browse_file)
+        self.widget.btn_roughness.clicked.connect(self.browse_file)
+        self.widget.btn_transmission.clicked.connect(self.browse_file)
+        self.widget.btn_sss.clicked.connect(self.browse_file)
+        self.widget.btn_sssColor.clicked.connect(self.browse_file)
+        self.widget.btn_bump.clicked.connect(self.browse_file)
+        self.widget.btn_displacement.clicked.connect(self.browse_file)
 
     def update_cbox_shader(self):
         from .utilities.mel_helper import get_all_shaders
@@ -26,15 +34,44 @@ class ShaderCreatorUI(QtWidgets.QWidget):
         for shader in shaders_list:
             self.widget.cbox_shader.addItem(shader)
 
+    def browse_file(self):
+        from .utilities.mel_helper import dialog_window
+        button = self.sender()
+        lEdit_name = 'lEdit_{}'.format(button.objectName().split('_')[-1])
+        lEdit = self.widget.findChild(QtCore.QObject, lEdit_name)
+        path = dialog_window()
+        lEdit.setText(path[0])
+
     def action_create_shader(self):
-        from.utilities.btn_actions import run_create_shader, run_assign_shader
+        from .utilities.btn_actions import run_create_shader, run_assign_shader, run_connect_textures
         shader_name = self.widget.lEdit_name.text()
         shader_type = self.widget.cbox_shader.currentText()
         assign = self.widget.chbox_assign.checkState()
         if assign:
-            run_assign_shader(shader_name, shader_type)
+            material, sg = run_assign_shader(shader_name, shader_type)
         else:
-            run_create_shader(shader_name, shader_type)
+            material, sg = run_create_shader(shader_name, shader_type)
+
+        attr_status_dict = {
+            'diffuse': self.widget.chbox_diffuse.checkState(),
+            'specular': self.widget.chbox_specular.checkState(),
+            'roughness': self.widget.chbox_roughness.checkState(),
+            'transmission': self.widget.chbox_transmission.checkState(),
+            'sss': self.widget.chbox_sss.checkState(),
+            'sssColor': self.widget.chbox_sssColor.checkState(),
+            'bump': self.widget.chbox_bump.checkState(),
+            'displacement': self.widget.chbox_displacement.checkState(),
+        }
+        attr_list = [k for (k,v) in attr_status_dict.items() if v!=0]
+        textures_path_dict = {}
+        if attr_list:
+            for attr in attr_list:
+                item = "lEdit_{}".format(attr)
+                textures_path_dict[attr] = self.widget.findChild(QtCore.QObject, item).property("text")
+        
+        if textures_path_dict:
+            run_connect_textures(material, textures_path_dict, sg)
+
 
 def main():
     if QtWidgets.QApplication.instance():
