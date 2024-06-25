@@ -34,7 +34,7 @@ class ShaderCreatorUI(QtWidgets.QWidget):
 
     def update_cbox_shader(self):
         """
-         Update cbox_shader combobox with shaders from MelHelper. get_all_sh
+         Update cbox_shader combobox with shaders from MelHelper.
         """
         from .utilities.mel_helper import get_all_shaders
         shaders_list = get_all_shaders()

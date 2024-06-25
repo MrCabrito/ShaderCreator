@@ -1,3 +1,4 @@
+from __future__ import annotations
 import maya.cmds as cmds
 
 def get_all_shaders() -> list[str]:
