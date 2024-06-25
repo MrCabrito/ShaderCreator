@@ -6,6 +6,11 @@ import os
 
 class ShaderCreatorUI(QtWidgets.QWidget):
     def __init__(self, parent = None):
+        """
+         Initialize the Shader Creator UI. This is called by the constructor and should not be called directly.
+         
+         @param parent - The parent of the widget. If None the widget will be placed in the top level
+        """
         super(ShaderCreatorUI, self).__init__(parent=parent)
         self.setWindowFlags(QtCore.Qt.Window)
         self.current_dir = os.path.dirname(os.path.realpath(__file__))
@@ -28,13 +33,20 @@ class ShaderCreatorUI(QtWidgets.QWidget):
         self.widget.btn_displacement.clicked.connect(self.browse_file)
 
     def update_cbox_shader(self):
+        """
+         Update cbox_shader combobox with shaders from MelHelper. get_all_sh
+        """
         from .utilities.mel_helper import get_all_shaders
         shaders_list = get_all_shaders()
         self.widget.cbox_shader.clear()
+        # Add shader to the widget from shader list
         for shader in shaders_list:
             self.widget.cbox_shader.addItem(shader)
 
     def browse_file(self):
+        """
+         Browse for file and save it in lEdit widget Args : None Returns : None Raises : Exception if there is a problem
+        """
         from .utilities.mel_helper import dialog_window
         button = self.sender()
         lEdit_name = 'lEdit_{}'.format(button.objectName().split('_')[-1])
@@ -43,10 +55,14 @@ class ShaderCreatorUI(QtWidgets.QWidget):
         lEdit.setText(path[0])
 
     def action_create_shader(self):
+        """
+         Create a Shader and return the material and SG for it.
+        """
         from .utilities.btn_actions import run_create_shader, run_assign_shader, run_connect_textures
         shader_name = self.widget.lEdit_name.text()
         shader_type = self.widget.cbox_shader.currentText()
         assign = self.widget.chbox_assign.checkState()
+        # Assign or create a shader.
         if assign:
             material, sg = run_assign_shader(shader_name, shader_type)
         else:
@@ -64,16 +80,23 @@ class ShaderCreatorUI(QtWidgets.QWidget):
         }
         attr_list = [k for (k,v) in attr_status_dict.items() if v!=0]
         textures_path_dict = {}
+        # This function will set the textures_path_dict dictionary of textures in the widget.
         if attr_list:
+            # This function will be called by the widget to get the textures path_dict
             for attr in attr_list:
                 item = "lEdit_{}".format(attr)
                 textures_path_dict[attr] = self.widget.findChild(QtCore.QObject, item).property("text")
         
+        # Connect to the textures path.
         if textures_path_dict:
             run_connect_textures(material, textures_path_dict, sg)
 
 
 def main():
+    """
+     Launch Shader Creator Tool in a new QApplication. This is called by omui. MQtUtil. mainWindow
+    """
+    # Destroy all Windows and all Windows.
     if QtWidgets.QApplication.instance():
         for win in (QtWidgets.QApplication.allWindows()):
             if "ShaderCreatorUI" in win.objectName():
