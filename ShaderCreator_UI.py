@@ -40,7 +40,7 @@ class ShaderCreatorUI(QtWidgets.QWidget):
         shaders_list = get_all_shaders()
         self.widget.cbox_shader.clear()
         # Add shader to the widget from shader list
-        for shader in shaders_list:
+        for shader in sorted(shaders_list):
             self.widget.cbox_shader.addItem(shader)
 
     def browse_file(self):
