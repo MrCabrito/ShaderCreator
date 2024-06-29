@@ -1,3 +1,5 @@
+import re
+
 def run_assign_shader(shader_name: str, shader_type: str) -> None:
     """
      Create and run a shader. This is a wrapper around mel_helper. create_shader and assign_shader.
@@ -34,7 +36,13 @@ def run_connect_textures(shader: str, textures: dict, sg:str):
      @param textures - dictionary of attributes to be connected to the subsurface.
      @param sg - name of the subsurface to connect to. If None the shader is connected to the main
     """
-    from .mel_helper import get_attributes_shaders, create_texture_file, connect_attributes, create_bump, create_displacement
+    from .mel_helper import (get_attributes_shaders, 
+                             create_texture_file, 
+                             connect_attributes, 
+                             create_bump, 
+                             create_displacement, 
+                             create_color_correct, 
+                             create_range)
 
     list_attr = get_attributes_shaders(shader, sg)
     
@@ -82,16 +90,16 @@ def run_connect_textures(shader: str, textures: dict, sg:str):
         file_node = create_texture_file(shader, attr, value)
         # Create the bump and displacement attributes.
         if attr == 'bump':
-            bump_node = create_bump(shader, file_node)
-            connect_attributes(bump_node, 'outNormal', shader, '{0}'.format(list(attr_name)[0]))
+            create_bump(shader, file_node, file_path = value, shader_attr=list(attr_name)[0])
             continue
         elif attr == 'displacement':
             displacement_node = create_displacement(shader, file_node)
             connect_attributes(displacement_node, 'displacement', sg, '{0}'.format(list(attr_name)[0]))
             continue
-        matches = ['color','Color']
         # Connect to the shader and color attributes.
-        if any(x in list(attr_name)[0] for x in matches):
-            connect_attributes(file_node, 'outColor', shader, '{0}'.format(list(attr_name)[0]))
+        if re.search('[Cc]olor', list(attr_name)[0]):
+            color_correct_node = create_color_correct(shader, file_node, attr)
+            connect_attributes(color_correct_node, 'outColor', shader, '{0}'.format(list(attr_name)[0]))
         else:
-            connect_attributes(file_node, 'outColorR', shader, '{0}'.format(list(attr_name)[0]))
+            range_node = create_range(shader, file_node, attr)
+            connect_attributes(range_node, 'outColorR', shader, '{0}'.format(list(attr_name)[0]))
