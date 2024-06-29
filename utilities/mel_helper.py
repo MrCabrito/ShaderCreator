@@ -164,7 +164,7 @@ def create_displacement(shader_name:str, texture_node:str) -> str:
      @return The created node.
     """
     displacement_node = cmds.shadingNode('displacementShader', name = '{0}_dispShd'.format(shader_name), asShader=True)
-    setRange_node = cmds.shadingNode('setRange', name = '{0}_setRange'.format(shader_name), asUtility=True)
+    setRange_node = cmds.shadingNode('setRange', name = '{0}_displacement_setRange'.format(shader_name), asUtility=True)
     connect_attributes(texture_node, 'outColor', setRange_node, 'value')
     connect_attributes(setRange_node, 'outValueX', displacement_node, 'displacement')
     return displacement_node
@@ -180,12 +180,13 @@ def create_color_correct(shader_name:str, texture_node:str, attr_type:str) -> st
      @return The created node.
     """
     shader_type = cmds.nodeType(shader_name)
+    node_name = '{0}_{1}'.format(shader_name, attr_type)
     # Creates a color correct node for the shader type.
     if shader_type.startswith('ai'):
-        color_correct_node = create_nodes('aiColorCorrect', attr_type)
+        color_correct_node = create_nodes('aiColorCorrect', node_name)
         connect_attributes(texture_node, 'outColor', color_correct_node, 'input')
     else:
-        color_correct_node = create_nodes('colorCorrect', attr_type)
+        color_correct_node = create_nodes('colorCorrect', node_name)
         connect_attributes(texture_node, 'outColor', color_correct_node, 'inColor')
     return color_correct_node
 
@@ -200,9 +201,10 @@ def create_range(shader_name:str, texture_node:str, attr_type:str) -> str:
      @return name of the created node or the shader name
     """
     shader_type = cmds.nodeType(shader_name)
+    node_name = '{0}_{1}'.format(shader_name, attr_type)
     # If shader_type starts with ai return shader_name
     if shader_type.startswith('ai'):
-        color_correct_node = create_nodes('aiRange', attr_type)
+        color_correct_node = create_nodes('aiRange', node_name)
         connect_attributes(texture_node, 'outColor', color_correct_node, 'input')
     else:
         return shader_name
