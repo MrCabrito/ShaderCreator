@@ -1,14 +1,39 @@
 from __future__ import annotations
 import maya.cmds as cmds
+import re
 
 def get_all_shaders() -> list[str]:
     """
-     Get all Shaders in the system. This is useful for debugging and to see if we can run a command that is in an environment that has a shader attached.
+     Get all shaders that maya knows about. This is used to determine which shaders should be used for the scene
      
      
-     @return A list of shader names that are in the system or None if there are no shaders in
+     @return A list of shader
     """
-    return cmds.listNodeTypes('shader', ex = "volume")
+    shader_maya = cmds.listNodeTypes('shader', ex = "volume")
+    default_shaders = [
+        'aiAmbientOcclusion',
+        'aiAtmosphereVolume',
+        'aiCarPaint',
+        'aiLambert',
+        'aiLayeredTexture',
+        'aiMatte',
+        'aiMixShader',
+        'aiShadowMatte',
+        'aiStandardHair',
+        'aiStandardSurface',
+        'aiToon',
+        'aiTwoSided',
+        'blinn',
+        'lambert',
+        'layeredShader',
+        'phong',
+        'rampShader',
+        'surfaceShader',
+        'RedshiftStandardMaterial',
+        'RedshiftCarPaint',
+    ]
+    shaders_found = list(set(default_shaders) & set(shader_maya))
+    return shaders_found
 
 def create_shader(name:str, node_type:str) -> tuple:
     """
@@ -84,7 +109,7 @@ def create_2d_placement(texture_node:str) -> None:
      
      @param texture_node - The name of the node to place.
      
-     @return The newly created node
+     @return None
     """
     placement_node = cmds.shadingNode("place2dTexture", asTexture=True, name='place2d_{0}'.format(texture_node))
     cmds.defaultNavigation(connectToExisting=True, source=placement_node, destination=texture_node)
@@ -102,18 +127,32 @@ def connect_attributes(out_obj:str, out_attr:str, in_obj:str, in_attr:str) -> No
     """
     cmds.connectAttr('{0}.{1}'.format(out_obj, out_attr), '{0}.{1}'.format(in_obj, in_attr))
 
-def create_bump(shader_name:str, texture_node:str) -> str:
+def create_bump(shader_name:str, texture_node:str, file_path:str, shader_attr:str) -> None:
     """
-     Create a bump shading node. This is used to bump an image to a different color. The shader must be created beforehand and it will be connected to the texture
+     Create a bump shading node. If shader_name is AI or Bb it will be used as a shader.
      
-     @param shader_name - name of the shader to use
-     @param texture_node - name of the texture node to connect
+     @param shader_name - name of the shader to create
+     @param texture_node - name of the texture node to connect the shader to
+     @param file_path - path to the shader file that will be used
+     @param shader_attr - attributes to set on the shader node
      
-     @return the created bump shading
+     @return None
     """
+    shader_type = cmds.nodeType(shader_name)
+    # If the shader type is arnold
+    if shader_type.startswith('ai'):
+        # If the file is a bump file or a normal map it will use different type of node.
+        if re.search('[Bb]ump', file_path):
+            bump_node = cmds.shadingNode('aiBump2d', name = '{0}_bump2d'.format(shader_name), asUtility=True)
+            connect_attributes(texture_node, 'outColorR', bump_node, 'bumpMap')
+        else:
+            bump_node = cmds.shadingNode('aiNormalMap', name = '{0}_normal'.format(shader_name), asUtility=True)
+            connect_attributes(texture_node, 'outColor', bump_node, 'input')
+        connect_attributes(bump_node, 'outValue', shader_name, shader_attr)
+        return bump_node
     bump_node = cmds.shadingNode('bump2d', name = '{0}_bump2d'.format(shader_name), asUtility=True)
     connect_attributes(texture_node, 'outColorR', bump_node, 'bumpValue')
-    return bump_node
+    connect_attributes(bump_node, 'outNormal', shader_name, shader_attr)
 
 def create_displacement(shader_name:str, texture_node:str) -> str:
     """
@@ -122,11 +161,63 @@ def create_displacement(shader_name:str, texture_node:str) -> str:
      @param shader_name - Name of the shader to create.
      @param texture_node - Node to be connected to the shader.
      
-     @return Reference to the created shader node.
+     @return The created node.
     """
     displacement_node = cmds.shadingNode('displacementShader', name = '{0}_dispShd'.format(shader_name), asShader=True)
-    connect_attributes(texture_node, 'outColorR', displacement_node, 'displacement')
+    setRange_node = cmds.shadingNode('setRange', name = '{0}_setRange'.format(shader_name), asUtility=True)
+    connect_attributes(texture_node, 'outColor', setRange_node, 'value')
+    connect_attributes(setRange_node, 'outValueX', displacement_node, 'displacement')
     return displacement_node
+
+def create_color_correct(shader_name:str, texture_node:str, attr_type:str) -> str:
+    """
+     Create colorCorrect node for shader. This is used to correct color of texture
+     
+     @param shader_name - name of shader to create node for
+     @param texture_node - name of texture node to create node for
+     @param attr_type - attribute type of node to create
+
+     @return The created node.
+    """
+    shader_type = cmds.nodeType(shader_name)
+    # Creates a color correct node for the shader type.
+    if shader_type.startswith('ai'):
+        color_correct_node = create_nodes('aiColorCorrect', attr_type)
+        connect_attributes(texture_node, 'outColor', color_correct_node, 'input')
+    else:
+        color_correct_node = create_nodes('colorCorrect', attr_type)
+        connect_attributes(texture_node, 'outColor', color_correct_node, 'inColor')
+    return color_correct_node
+
+def create_range(shader_name:str, texture_node:str, attr_type:str) -> str:
+    """
+     Create a range node to be used.
+     
+     @param shader_name - name of the shader to be used
+     @param texture_node - name of the texture node to be used
+     @param attr_type - type of attribute to be used
+     
+     @return name of the created node or the shader name
+    """
+    shader_type = cmds.nodeType(shader_name)
+    # If shader_type starts with ai return shader_name
+    if shader_type.startswith('ai'):
+        color_correct_node = create_nodes('aiRange', attr_type)
+        connect_attributes(texture_node, 'outColor', color_correct_node, 'input')
+    else:
+        return shader_name
+    return color_correct_node
+
+def create_nodes(node_type:str, name:str) -> str:
+    """
+     Create shading nodes of type node_type.
+     
+     @param node_type - Type of node to create. Can be one of the following :'colorCorrect', 'setRange''
+     @param name - Name to give the node. It is used as a prefix to the node name.
+     
+     @return The name of the created node or None if there was an error
+    """
+    return cmds.shadingNode(node_type, name = '{0}_{1}'.format(name, node_type), asUtility=True)
 
 def dialog_window() -> list:
     """
