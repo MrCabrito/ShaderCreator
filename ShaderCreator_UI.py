@@ -58,15 +58,10 @@ class ShaderCreatorUI(QtWidgets.QWidget):
         """
          Create a Shader and return the material and SG for it.
         """
-        from .utilities.btn_actions import run_create_shader, run_assign_shader, run_connect_textures
+        from .utilities.btn_actions import run_create
         shader_name = self.widget.lEdit_name.text()
         shader_type = self.widget.cbox_shader.currentText()
         assign = self.widget.chbox_assign.checkState()
-        # Assign or create a shader.
-        if assign:
-            material, sg = run_assign_shader(shader_name, shader_type)
-        else:
-            material, sg = run_create_shader(shader_name, shader_type)
 
         attr_status_dict = {
             'diffuse': self.widget.chbox_diffuse.checkState(),
@@ -78,8 +73,10 @@ class ShaderCreatorUI(QtWidgets.QWidget):
             'bump': self.widget.chbox_bump.checkState(),
             'displacement': self.widget.chbox_displacement.checkState(),
         }
+
+        #Checks if the checkbox value is False to remove does keys
         attr_list = [k for (k,v) in attr_status_dict.items() if v!=0]
-        textures_path_dict = {}
+        textures_path_dict = dict()
         # This function will set the textures_path_dict dictionary of textures in the widget.
         if attr_list:
             # This function will be called by the widget to get the textures path_dict
@@ -87,10 +84,12 @@ class ShaderCreatorUI(QtWidgets.QWidget):
                 item = "lEdit_{}".format(attr)
                 textures_path_dict[attr] = self.widget.findChild(QtCore.QObject, item).property("text")
         
-        # Connect to the textures path.
-        if textures_path_dict:
-            run_connect_textures(material, textures_path_dict, sg)
-
+        message = run_create(shader_name, shader_type, assign, textures_path_dict)
+        if message:
+            dlg = QtWidgets.QMessageBox(self)
+            dlg.setWindowTitle("Error Found")
+            dlg.setText(message)
+            dlg.exec_()
 
 def main():
     """
