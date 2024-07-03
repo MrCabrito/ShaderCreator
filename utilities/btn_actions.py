@@ -18,7 +18,7 @@ def run_create(shader_name: str, shader_type: str, assign: bool, textures: dict)
     # If assign is true meshes are assigned to selection shapes
     if assign:
         meshes_list = selection_shapes_meshes()
-    sanity_errors = main_sanity_checks(shader_name, meshes_list)
+    sanity_errors = main_sanity_checks(shader_name, meshes_list, textures)
     # Return true if sanity errors are met.
     if sanity_errors:
         return sanity_errors
