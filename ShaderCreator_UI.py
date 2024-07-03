@@ -101,9 +101,12 @@ def main():
             if "ShaderCreatorUI" in win.objectName():
                 win.destroy()
 
+    tool_name = 'Shader Creator Tool'
+    tool_version = "v1.0.0"
+    author = "Abraham Gonzalez"
     mayaMainWindowPtr = omui.MQtUtil.mainWindow()
     mayaMainWindow = wrapInstance(int(mayaMainWindowPtr), QtWidgets.QWidget)
     ShaderCreatorUI.window = ShaderCreatorUI(parent = mayaMainWindow)
     ShaderCreatorUI.window.setObjectName('ShaderCreatorUI') # code above uses this to ID any existing windows
-    ShaderCreatorUI.window.setWindowTitle('Shader Creator Tool')
+    ShaderCreatorUI.window.setWindowTitle('{0} {1}'.format(tool_name, tool_version))
     ShaderCreatorUI.window.show()
