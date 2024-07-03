@@ -66,10 +66,10 @@ def assign_shader(obj_list: list[str], SG: str) -> None:
 
 def selection_shapes_meshes() -> list[str]:
     """
-     List shapes in DAG with meshes.
+     List shapes in DAG with meshes and nurbsSurfaces.
      
      
-     @return list of shapes in DAG with meshes
+     @return list of shapes in DAG with meshes and nurbsSurfaces.
     """
     return cmds.ls(selection = True, dag=True, type=["mesh", "nurbsSurface"], noIntermediate=True)
 
@@ -232,8 +232,17 @@ def dialog_window() -> list:
     return cmds.fileDialog2(fileFilter=imageFilter, dialogStyle=2, okc='Ok', fm=1)
 
 def surface_check(objs_list:list[str]) -> list[str]|None:
+    """
+     Checks if nodes are surfaces or nurbsSurface. This is to avoid problems with node types that don't have mesh or nurbsSurface in them.
+     
+     @param objs_list - list of nodes to check
+     
+     @return list of nodes that do not have mesh or nurbs
+    """
     wrong_objs = list()
+    # Add any objects that are not mesh nurbsSurface objects
     for obj in objs_list:
+        # Add obj to wrong_objs list if not mesh nurbsSurface
         if not re.findall('mesh|nurbsSurface', cmds.nodeType(obj)):
             wrong_objs.append(obj)
     return wrong_objs if wrong_objs else None

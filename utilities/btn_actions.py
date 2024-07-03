@@ -2,22 +2,44 @@ from __future__ import annotations
 import re
 
 def run_create(shader_name: str, shader_type: str, assign: bool, textures: dict) -> str|None:
+    """
+     Create shader. If assign is True assign selected meshes to the shader and connect the textures.
+     
+     @param shader_name - Name of the shader to create.
+     @param shader_type - Type of the shader to create.
+     @param assign - True to assign selected meshes. False to not assign.
+     @param textures - Dictionary of textures to connect to the shader.
+     
+     @return Error message if something went wrong None otherwise.
+    """
     from .mel_helper import selection_shapes_meshes
     from .sanity_checks import main_sanity_checks
     meshes_list = list()
+    # If assign is true meshes are assigned to selection shapes
     if assign:
         meshes_list = selection_shapes_meshes()
     sanity_errors = main_sanity_checks(shader_name, meshes_list)
+    # Return true if sanity errors are met.
     if sanity_errors:
         return sanity_errors
     material, sg = run_create_shader(shader_name, shader_type)
+    # Assign meshes to the shader.
     if meshes_list:
         run_assign_shader(sg, meshes_list)
+    # connects to the textures if textures is set
     if textures:
         run_connect_textures(material, textures, sg)
     return None
 
 def run_assign_shader(sg: str, meshes_list: list[str]) -> None:
+    """
+     Assign shaders to the selected meshes or nurbs surfaces.
+     
+     @param sg - name of the shader to be used
+     @param meshes_list - list of meshes to be assigned
+
+     @return None
+    """
     from .mel_helper import assign_shader
     assign_shader(meshes_list, sg)
 
