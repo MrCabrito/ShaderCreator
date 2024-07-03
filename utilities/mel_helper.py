@@ -71,7 +71,7 @@ def selection_shapes_meshes() -> list[str]:
      
      @return list of shapes in DAG with meshes
     """
-    return cmds.ls(selection = True, dag=True, type="mesh", noIntermediate=True)
+    return cmds.ls(selection = True, dag=True, type=["mesh", "nurbsSurface"], noIntermediate=True)
 
 def get_attributes_shaders(shader: str, sg:str)-> list[str]:
     """
@@ -230,3 +230,10 @@ def dialog_window() -> list:
     """
     imageFilter = "Images Files (*.jpg *.jpeg *.tif *.png *.tga *.exr)"
     return cmds.fileDialog2(fileFilter=imageFilter, dialogStyle=2, okc='Ok', fm=1)
+
+def surface_check(objs_list:list[str]) -> list[str]|None:
+    wrong_objs = list()
+    for obj in objs_list:
+        if not re.findall('mesh|nurbsSurface', cmds.nodeType(obj)):
+            wrong_objs.append(obj)
+    return wrong_objs if wrong_objs else None
