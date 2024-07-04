@@ -45,7 +45,7 @@ class ShaderCreatorUI(QtWidgets.QWidget):
 
     def browse_file(self):
         """
-         Browse for file and save it in lEdit widget Args : None Returns : None Raises : Exception if there is a problem
+         Browse for file and save it in lEdit widget
         """
         from .utilities.mel_helper import dialog_window
         button = self.sender()
@@ -102,7 +102,7 @@ def main():
                 win.destroy()
 
     tool_name = 'Shader Creator Tool'
-    tool_version = "v1.0.0"
+    tool_version = "v1.0.1"
     author = "Abraham Gonzalez"
     mayaMainWindowPtr = omui.MQtUtil.mainWindow()
     mayaMainWindow = wrapInstance(int(mayaMainWindowPtr), QtWidgets.QWidget)

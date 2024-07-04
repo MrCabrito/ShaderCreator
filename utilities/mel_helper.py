@@ -86,20 +86,27 @@ def get_attributes_shaders(shader: str, sg:str)-> list[str]:
     shader_attr.extend(cmds.listAttr(sg))
     return shader_attr
 
-def create_texture_file(shader_name:str, attr_type:str, file_path:str|None = None) -> str:
+def create_texture_file(shader_name:str, attr_type:str, file_path:str) -> str:
     """
      Create a file node that is used to place shaders.
      
      @param shader_name - Name of the shader to create
      @param attr_type - Type of attribute to use
-     @param file_path - Path to file if None will use default
+     @param file_path - Path to file
      
      @return The created node
     """
+    from .path_helper import path_udim
     file_node = cmds.shadingNode('file', name = '{0}_{1}'.format(shader_name, attr_type), asTexture=True)
     # Set the file texture name attribute to file_path
     if file_path:
+        # Check path before adding to the node for UDIM format
+        file_path, udim_format = path_udim(file_path)
         cmds.setAttr('{0}.fileTextureName'.format(file_node), file_path, type='string')
+        # Check if using UDIM format mode to set the attribute to the corresponding format
+        if udim_format:
+            cmds.setAttr('{0}.uvTilingMode'.format(file_node), udim_format)
+    # Adds the 2d placement for the file node
     create_2d_placement(file_node)
     return file_node
 
