@@ -100,7 +100,7 @@ def run_connect_textures(shader: str, textures: dict, sg:str) -> None:
         'sss': [
             'subsurface'
             ],
-        'sssColor': [
+        'ssscolor': [
             'subsurfaceColor'
             ],
         'bump': [

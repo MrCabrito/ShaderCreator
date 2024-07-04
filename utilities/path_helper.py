@@ -1,4 +1,7 @@
+from __future__ import annotations
 import re
+import os
+
 def path_udim(file_path: str) -> tuple:
     """
      Checks for UDIM format and modifies path if needed. This is a helper function for get_udim_file
@@ -24,3 +27,17 @@ def path_udim(file_path: str) -> tuple:
             file_path = '{0}.u<U>_v<V>.{1}'.format(file_path, extension)
             udim = 2
     return file_path, udim
+
+def path_look_relatives(file_path: str) -> dict:
+    path, file = file_path.rsplit("/", 1)
+    map_type = re.search('([Dd]iffuse)|([Ss]pecular)|([Rr]oughness)|([Tt]ransmission)|([Ss]ssColor)|([Ss]ss)|([Bb]ump)|([Dd]isplacement)', file)
+    if map_type:
+        files_found = [file_found for file_found in os.listdir(path) if os.path.isfile(os.path.join(path,file_found))]
+        re_pattern = r'{}(([Dd]iffuse)|([Ss]pecular)|([Rr]oughness)|([Tt]ransmission)|([Ss]ssColor)|([Ss]ss)|([Bb]ump)|([Dd]isplacement))'.format(file.split(map_type.group())[0])
+        re_compile = re.compile(re_pattern)
+        files_relative = dict()
+        for file_match in files_found:
+            re_match = re.search(re_compile, file_match)
+            if re_match:
+                files_relative[(re_match.group().replace(file.split(map_type.group())[0], ''))]='{0}/{1}'.format(path,file_match)
+        return files_relative

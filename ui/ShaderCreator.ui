@@ -432,7 +432,7 @@
           <number>0</number>
          </property>
          <item>
-          <widget class="QCheckBox" name="chbox_sssColor">
+          <widget class="QCheckBox" name="chbox_ssscolor">
            <property name="minimumSize">
             <size>
              <width>90</width>
@@ -445,7 +445,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="lEdit_sssColor">
+          <widget class="QLineEdit" name="lEdit_ssscolor">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -455,7 +455,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="btn_sssColor">
+          <widget class="QPushButton" name="btn_ssscolor">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -663,9 +663,9 @@
    </hints>
   </connection>
   <connection>
-   <sender>chbox_sssColor</sender>
+   <sender>chbox_ssscolor</sender>
    <signal>clicked(bool)</signal>
-   <receiver>btn_sssColor</receiver>
+   <receiver>btn_ssscolor</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -791,9 +791,9 @@
    </hints>
   </connection>
   <connection>
-   <sender>chbox_sssColor</sender>
+   <sender>chbox_ssscolor</sender>
    <signal>clicked(bool)</signal>
-   <receiver>lEdit_sssColor</receiver>
+   <receiver>lEdit_ssscolor</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
