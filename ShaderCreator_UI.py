@@ -155,3 +155,6 @@ def main():
     ShaderCreatorUI.window.setObjectName('ShaderCreatorUI') # code above uses this to ID any existing windows
     ShaderCreatorUI.window.setWindowTitle('{0} {1}'.format(tool_name, tool_version))
     ShaderCreatorUI.window.show()
+
+if __name__ == "__main__":
+    main()
