@@ -12,12 +12,13 @@ Inside Maya in the Python editor add this lines and run it:
 
 ```python
   import ShaderCreator.ShaderCreator_UI
-  ShaderCreator_UI.main()
+  ShaderCreator.ShaderCreator_UI.main()
 ```
 
 ## Authors
 
-- Abraham González [@MrCabrito](https://www.github.com/MrCabrito)
+- Abraham González [@Abraham](https://www.github.com/MrCabrito)
+- Jose Luis Flores [@Luis](https://www.artstation.com/kumaba)
 
 ## Appendix
 
