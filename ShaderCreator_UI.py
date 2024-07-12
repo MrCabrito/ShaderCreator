@@ -123,6 +123,16 @@ class ShaderCreatorUI(QtWidgets.QWidget):
         self.widget.chbox_bump.setChecked(False)
         self.widget.chbox_displacement.setChecked(False)
 
+        # Disable browse buttons
+        self.widget.btn_diffuse.setEnabled(False)
+        self.widget.btn_specular.setEnabled(False)
+        self.widget.btn_roughness.setEnabled(False)
+        self.widget.btn_transmission.setEnabled(False)
+        self.widget.btn_sss.setEnabled(False)
+        self.widget.btn_ssscolor.setEnabled(False)
+        self.widget.btn_bump.setEnabled(False)
+        self.widget.btn_displacement.setEnabled(False)
+
         # Clean all paths from line edits
         self.widget.lEdit_diffuse.setText("")
         self.widget.lEdit_specular.setText("")
@@ -132,6 +142,16 @@ class ShaderCreatorUI(QtWidgets.QWidget):
         self.widget.lEdit_ssscolor.setText("")
         self.widget.lEdit_bump.setText("")
         self.widget.lEdit_displacement.setText("")
+
+        # Disable line edits
+        self.widget.lEdit_diffuse.setEnabled(False)
+        self.widget.lEdit_specular.setEnabled(False)
+        self.widget.lEdit_roughness.setEnabled(False)
+        self.widget.lEdit_transmission.setEnabled(False)
+        self.widget.lEdit_sss.setEnabled(False)
+        self.widget.lEdit_ssscolor.setEnabled(False)
+        self.widget.lEdit_bump.setEnabled(False)
+        self.widget.lEdit_displacement.setEnabled(False)
 
         # Reset Auto Search
         self.auto_search = True
