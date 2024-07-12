@@ -48,7 +48,7 @@ def path_look_relatives(file_path: str) -> dict:
         file_version = re.search('([Vv]\d{2})', file_name)
         file_name = file_name.replace(file_version.group(), '([Vv]\d{2})')
         file_root, file_end = file_name.split(map_type.group())
-        re_pattern = r'{0}(([Dd]iffuse)|([Ss]pecular)|([Rr]oughness)|([Tt]ransmission)|([Ss]ssColor)|([Ss]ss)|([Bb]ump)|([Dd]isplacement)){1}.{2}'.format(file_root, file_end, file_extension)
+        re_pattern = r'{0}(([Dd]iffuse)|([Ss]pecular)|([Rr]oughness)|([Tt]ransmission)|([Ss]ssColor)|([Ss]ss)|([Bb]ump)|([Nn]ormal)|([Dd]isplacement)){1}.{2}'.format(file_root, file_end, file_extension)
         re_compile = re.compile(re_pattern)
         files_relative = dict()
         
@@ -56,7 +56,9 @@ def path_look_relatives(file_path: str) -> dict:
         for file in files_found:
             re_match = re.search(re_compile, file)
             if re_match:
-                map_type = (re.search('([Dd]iffuse)|([Ss]pecular)|([Rr]oughness)|([Tt]ransmission)|([Ss]ssColor)|([Ss]ss)|([Bb]ump)|([Dd]isplacement)', file)).group()
+                map_type = (re.search('([Dd]iffuse)|([Ss]pecular)|([Rr]oughness)|([Tt]ransmission)|([Ss]ssColor)|([Ss]ss)|([Bb]ump)|([Nn]ormal)|([Dd]isplacement)', file)).group()
+                if re.search('([Nn]ormal)', map_type):
+                    map_type = 'Bump'
                 if not files_relative.get(map_type):
                     files_relative[map_type] = list()
                 files_relative[map_type].append('{0}/{1}'.format(path,file))
