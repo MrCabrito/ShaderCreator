@@ -1,6 +1,6 @@
 # Shader Creator Tool
 
-It is tool to help artists to create new shaders with all the textures and utilities connected with only one button.
+It is a tool to help artists to create new shaders with all the textures and utilities connected with only one button.
 
 ## Installation
 
@@ -25,3 +25,7 @@ Inside Maya in the Python editor add this lines and run it:
 It works for Maya 2022 or higher.
 
 Only works with Arnold Shaders and Maya Default Shaders.
+
+## Documentation
+
+[Documentation](https://1drv.ms/w/s!AuKLApdKflwPwFbSmj1iN4ja9A_p?e=UfOoxc)
