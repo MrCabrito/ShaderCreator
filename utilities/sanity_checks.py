@@ -76,3 +76,24 @@ def path_exists_check(textures: dict) -> list[str]:
     import os
     path_not_found = ['{0}: {1}'.format(map_type, texture_path) for map_type,texture_path in textures.items() if texture_path and not os.path.isfile(texture_path)]
     return path_not_found
+
+def file_bad_naming(file: str) -> str:
+    """
+     Checks the file to see if it is a bad naming.
+     
+     @param file - The name of the file to check.
+     
+     @return Error message. The error message is a human readable string
+    """
+    error_message = "<b>{}</b><br />".format(file)
+    map_type = re.search('([Dd]iffuse)|([Ss]pecular)|([Rr]oughness)|([Tt]ransmission)|([Ss]ssColor)|([Ss]ss)|([Bb]ump)|([Dd]isplacement)', file)
+    file_version = re.search('([Vv]\d{2})', file)
+    # If map_type is not set the map type is missing.
+    if not map_type:
+        error_message = '{}<font color="red">Missing the map type in the texture file name. For example: Diffuse</font><br />'.format(error_message)
+    # If file_version is not set to v01 or V01
+    if not file_version:
+        error_message = '{}<font color="red">Missing the file version. For example v01</font><br />'.format(error_message)
+    error_message = '{}<b>Auto-search disable to load textures manually.</b><br />'.format(error_message)
+    return error_message
+

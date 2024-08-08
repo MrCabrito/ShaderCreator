@@ -50,22 +50,37 @@ class ShaderCreatorUI(QtWidgets.QWidget):
         """
         from .utilities.mel_helper import dialog_window
         from .utilities.path_helper import path_look_relatives
+        from .utilities.sanity_checks import file_bad_naming
         button = self.sender()
         path = dialog_window()
         if self.auto_search:
-            files_relative = path_look_relatives(path[0])
-            for map_type, file_path in files_relative.items():
-                lEdit_name = 'lEdit_{}'.format(map_type.lower())
+            try:
+                files_relative = path_look_relatives(path[0])
+                for map_type, file_path in files_relative.items():
+                    lEdit_name = 'lEdit_{}'.format(map_type.lower())
+                    lEdit = self.widget.findChild(QtCore.QObject, lEdit_name)
+                    chBox_name = 'chbox_{}'.format(map_type.lower())
+                    chBox = self.widget.findChild(QtCore.QObject, chBox_name)
+                    btn_name = 'btn_{}'.format(map_type.lower())
+                    btn = self.widget.findChild(QtCore.QObject, btn_name)
+                    lEdit.setText(file_path)
+                    lEdit.setEnabled(True)
+                    chBox.setChecked(True)
+                    btn.setEnabled(True)
+                self.auto_search = False
+            except AttributeError:
+                _, file = path[0].rsplit("/", 1)
+                message =  file_bad_naming(file)
+                dlg = QtWidgets.QMessageBox(self)
+                dlg.setWindowTitle("Error Found")
+                dlg.setText(message)
+                dlg.exec_()
+                lEdit_name = 'lEdit_{}'.format(button.objectName().split('_')[-1])
                 lEdit = self.widget.findChild(QtCore.QObject, lEdit_name)
-                chBox_name = 'chbox_{}'.format(map_type.lower())
-                chBox = self.widget.findChild(QtCore.QObject, chBox_name)
-                btn_name = 'btn_{}'.format(map_type.lower())
-                btn = self.widget.findChild(QtCore.QObject, btn_name)
-                lEdit.setText(file_path)
-                lEdit.setEnabled(True)
-                chBox.setChecked(True)
-                btn.setEnabled(True)
-            self.auto_search = False
+                lEdit.setText(path[0])
+                self.auto_search = False
+            except Exception as err:
+                message = "Error Type: {0}\nError: {1}\n".format(type(err), err)
         else:
             lEdit_name = 'lEdit_{}'.format(button.objectName().split('_')[-1])
             lEdit = self.widget.findChild(QtCore.QObject, lEdit_name)
@@ -178,3 +193,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
