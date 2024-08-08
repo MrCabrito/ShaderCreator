@@ -182,7 +182,7 @@ def main():
                 win.destroy()
 
     tool_name = 'Shader Creator Tool'
-    tool_version = "v1.0.3"
+    tool_version = "v1.0.4"
     author = "Abraham Gonzalez"
     mayaMainWindowPtr = omui.MQtUtil.mainWindow()
     mayaMainWindow = wrapInstance(int(mayaMainWindowPtr), QtWidgets.QWidget)
